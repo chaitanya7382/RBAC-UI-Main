@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Create Your Account</h1>
+        <form id="register-form">
+            <input type="text" id="username" placeholder="Username" required />
+            <input type="password" id="password" placeholder="Password" required />
+            <input type="text" id="roleName" placeholder="Role (e.g., Admin, User)" required />
+            <button type="submit">Register</button>
+        </form>
+
+        <div id="message"></div>
+
+        <p>Already have an account? <a href="login.html">Login here</a></p>
+
+        <script>
+            document.getElementById("register-form").addEventListener("submit", async (e) => {
+                e.preventDefault();
+
+                const username = document.getElementById("username").value;
+                const password = document.getElementById("password").value;
+                const roleName = document.getElementById("roleName").value;
+
+                try {
+                    const response = await fetch("http://localhost:5000/register", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ username, password, roleName })
+                    });
+
+                    if (response.ok) {
+                        const message = await response.text();
+                        document.getElementById("message").textContent = message;
+                        document.getElementById("message").style.color = "green";
+                        setTimeout(() => {
+                            window.location.href = "login.html"; // Redirect to login page
+                        }, 2000); // Redirect after 2 seconds
+                    } else {
+                        const error = await response.json();
+                        document.getElementById("message").textContent = error.message || "Registration failed. Please try again.";
+                        document.getElementById("message").style.color = "red";
+                    }
+                } catch (error) {
+                    console.error("Error during registration:", error);
+                    document.getElementById("message").textContent = "An unexpected error occurred. Please try again later.";
+                    document.getElementById("message").style.color = "red";
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>

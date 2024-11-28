@@ -1,0 +1,153 @@
+/* General body styling */
+body {
+    background-color: #f4f4f4; /* Soft light gray background */
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* Profile Section */
+.profile-info {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    background-color: #fff; /* White background for the profile info section */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    padding: 30px;
+    max-width: 500px;
+    margin: 50px auto;
+}
+
+.profile-info img {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border: 3px solid #1F1FE9;
+}
+
+.profile-info h1 {
+    margin-top: 15px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.profile-info p {
+    font-size: 18px;
+    margin-top: 5px;
+    color: #666;
+}
+
+/* Stats Section */
+.profile-stats {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.profile-stats .stat {
+    margin: 0 15px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.profile-stats .stat p {
+    margin: 5px 0;
+}
+
+/* Posts Section */
+.posts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.post {
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.post img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ccc;
+}
+
+.post-actions {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.like-button img, .comment-button img, .share-button img {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.like-button, .comment-button, .share-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-tools {
+    display: none;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.admin-tools button {
+    padding: 10px 20px;
+    background-color: #1F1FE9;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.admin-tools button:hover {
+    background-color: #1414A6;
+}
+
+/* Hover Effects */
+.post:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* More pronounced shadow on hover */
+}
+
+button:hover {
+    background-color: #1414A6;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .posts {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .post {
+        width: 90%;
+    }
+
+    .profile-info img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .profile-info h1 {
+        font-size: 22px;
+    }
+}

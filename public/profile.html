@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+    <main>
+        <!-- Profile Info -->
+        <section class="profile-info">
+            <img src="https://plus.unsplash.com/premium_photo-1669343628944-d0e2d053a5e8?q=80&w=1888&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="User Profile Picture">
+            <h1 id="username">CHICCHICK</h1>
+            <p>Feathers and fluffiness: a match made in heaven</p>
+        </section>
+
+        <!-- Admin Tools -->
+        <section class="admin-tools" id="admin-tools">
+            <button id="createPostButton">Create Post</button>
+        </section>
+
+        <!-- Posts Section -->
+        <section class="posts" id="posts">
+            <!-- Posts will be dynamically loaded here -->
+        </section>
+    </main>
+
+    <script>
+        // Load role and username from localStorage
+        const role = localStorage.getItem("role");
+        const username = localStorage.getItem("username");
+
+        // Display the username dynamically
+        document.getElementById("username").textContent = username || "Guest";
+
+        // Role-based UI rendering
+        const adminTools = document.getElementById("admin-tools");
+        if (role === "Admin") {
+            adminTools.style.display = "block";
+        } else {
+            adminTools.style.display = "none";
+        }
+
+        // Simulated posts data
+        const posts = [
+            { id: 1, imageUrl: "https://t3.ftcdn.net/jpg/06/10/68/10/360_F_610681083_M6XlAUkKj0I9ykA0Iz1ysOTCsNvpU5Vw.jpg", likes: 10 },
+            { id: 2, imageUrl: "https://images.unsplash.com/photo-1486365227551-f3f90034a57c?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmlyZHxlbnwwfHwwfHx8MA%3D%3D", likes: 25 }
+        ];
+
+        // Load posts dynamically
+        function loadPosts() {
+            const postsContainer = document.getElementById("posts");
+            postsContainer.innerHTML = ""; // Clear posts section
+
+            posts.forEach((post) => {
+                const postDiv = document.createElement("div");
+                postDiv.classList.add("post");
+
+                postDiv.innerHTML = `
+                    <img src="${post.imageUrl}" alt="Post Image">
+                    <div class="post-actions">
+                        <p>Likes: <span id="likes-${post.id}">${post.likes}</span></p>
+                        ${role === "User" ? `
+                            <div class="like-button" onclick="likePost(${post.id})">
+                                <img src="https://as2.ftcdn.net/v2/jpg/02/51/03/79/1000_F_251037997_MeTYipH5QcDmrsRtk8jLEtG7xXmv779J.jpg" alt="Like">
+                            </div>
+                            <button class="comment-button">
+                                <img src="https://cdn.iconscout.com/icon/free/png-256/free-comment-logo-icon-download-in-svg-png-gif-file-formats--instagram-brand-pack-logos-icons-2701887.png" alt="Comment">
+                            </button>
+                            <button class="share-button">
+                                <img src="https://cdn-icons-png.flaticon.com/512/1358/1358023.png" alt="Share">
+                            </button>
+                        ` : ""}
+                    </div>
+                `;
+                postsContainer.appendChild(postDiv);
+            });
+        }
+
+        // Admin: Create a new post
+        document.getElementById("createPostButton")?.addEventListener("click", () => {
+            const newPostImageUrl = prompt("Enter the image URL for the post:");
+            if (newPostImageUrl) {
+                posts.push({ id: posts.length + 1, imageUrl: newPostImageUrl, likes: 0 });
+                loadPosts();
+                alert("Post created successfully!");
+            }
+        });
+
+        // User: Like a post
+        function likePost(postId) {
+            const post = posts.find((p) => p.id === postId);
+            if (post) {
+                post.likes++;
+                document.getElementById(`likes-${postId}`).textContent = post.likes;
+                alert("You liked the post!");
+            }
+        }
+
+        // Initial load
+        loadPosts();
+    </script>
+</body>
+</html>
